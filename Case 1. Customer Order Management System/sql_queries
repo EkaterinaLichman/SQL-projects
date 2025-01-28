@@ -1,0 +1,67 @@
+1. Retrieve all orders by a specific Customer
+
+SELECT 
+    o.OrderID,
+    c.FirstName + ' ' + c.LastName AS CustomerName,
+    o.OrderDate,
+    p.ProductName,
+    od.Quantity
+FROM Orders o
+JOIN Customers c ON o.CustomerID = c.CustomerID
+JOIN OrderDetails od ON o.OrderID = od.OrderID
+JOIN Products p ON od.ProductID = p.ProductID
+WHERE c.CustomerID = 1;
+
+--Result: 
+
+OrderID |	CustomerName |	              OrderDate | ProductName |	Quantity
+--------|--------------|--------------------------|-------------|---------
+      1	|     John Doe |  2025-01-27 22:33:59.030 |	     Laptop	|        1
+      1	|     John Doe |	2025-01-27 22:33:59.030 |	 Headphones	|        2
+
+
+2. Calculate Total Quantity of Sales in a Specific Time Period
+
+SELECT 
+    SUM(od.Quantity) AS TotalQuantity,
+    MIN(o.OrderDate) AS StartDate,
+    MAX(o.OrderDate) AS EndDate
+FROM Orders o
+JOIN OrderDetails od ON o.OrderID = od.OrderID
+WHERE o.OrderDate BETWEEN '2025-01-01' AND '2025-01-31';
+
+--Result:
+
+TotalQuantity |               StartDate |	                EndDate
+--------------|-------------------------|------------------------
+            4	| 2025-01-27 22:33:59.030 |	2025-01-27 22:33:59.030
+
+3. Find the Most Popular Product
+
+SELECT 
+    TOP 1 p.ProductName,
+    SUM(od.Quantity) AS TotalSold
+FROM OrderDetails od
+JOIN Products p ON od.ProductID = p.ProductID
+GROUP BY p.ProductName
+ORDER BY TotalSold DESC;
+
+--Result:
+
+ProductName |	TotalSold
+------------|----------
+ Headphones |         2
+
+4. Check Current Inventory Levels
+
+SELECT 
+    ProductName,
+    StockQuantity
+FROM Products
+WHERE StockQuantity < 10;
+
+--Result:
+
+ProductName |	StockQuantity
+------------|--------------
+       Xbox |	            5
