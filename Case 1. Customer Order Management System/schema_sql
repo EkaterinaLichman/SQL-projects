@@ -23,7 +23,8 @@ INSERT INTO Products (ProductName, Category, Price, StockQuantity)
 VALUES 
 ('Laptop', 'Electronics', 1000.00, 50),
 ('Phone', 'Electronics', 500.00, 100),
-('Headphones', 'Accessories', 50.00, 200);
+('Headphones', 'Accessories', 50.00, 200),
+('Xbox', 'Electronics', 800.00, 5);
 
 CREATE TABLE Orders (
     OrderID INT PRIMARY KEY IDENTITY(1,1),
